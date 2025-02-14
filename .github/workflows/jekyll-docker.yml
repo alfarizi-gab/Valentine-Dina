@@ -1,0 +1,104 @@
+name: Jekyll site CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the site in the jekyll/builder container
+      run: |
+        docker run \
+        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine’s Day, Dina!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card">
+        <img src="heart.png" alt="Love" class="heart-image">
+        <h1>💖 Happy Valentine’s Day, Dina! 💖</h1>
+        <p class="fade-in">Untuk Dina yang spesial,</p>
+        <p class="fade-in">Aku bersyukur memiliki kamu di hidupku. Semoga hari ini membawa banyak kebahagiaan dan cinta untuk kita!</p>
+        <p class="love heart-beat">❤️ Aku sayang kamu, Dina! ❤️</p>
+    </div>
+</body>
+</html>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe6e6;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in forwards;
+}
+
+/* Gaya gambar hati */
+.heart-image {
+    width: 100px;
+    margin-bottom: 10px;
+    animation: heartbeat 1.5s infinite;
+}
+
+h1 {
+    color: #e60073;
+}
+
+p {
+    font-size: 18px;
+    color: #333;
+}
+
+.love {
+    font-size: 20px;
+    font-weight: bold;
+    color: #cc0052;
+}
+
+/* Animasi fade-in untuk teks */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 2s ease-in forwards;
+}
+
+/* Animasi hati berdenyut */
+.heart-beat {
+    display: inline-block;
+    animation: heartbeat 1.5s infinite;
+}
+
+/* Keyframes untuk animasi */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
